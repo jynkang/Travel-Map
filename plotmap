@@ -33,3 +33,5 @@ saveWidget(m, "m.html")
 # Import .html file to media library 
 # Encode in page when editing blog post
  <iframe seamless src = "http://www.xxx...m.html", width = "2500", height = "1000"></iframe>
+ 
+ # Credits: http://whatdothedatasay.com/2016/03/16/geocoding-addresses-in-r-with-ggmap/, https://trendct.org/2015/06/26/tutorial-how-to-put-dots-on-a-leaflet-map-with-r/,https://www.r-bloggers.com/using-leaflet-and-htmlwidgets-in-a-hugo-blog-post/ 
