@@ -1,0 +1,35 @@
+library(dplyr) # Clean up addresses in base file using packages dplyr and tidyr if needed
+library(tidyr)
+
+currentWD <- getwd() # Set working directory 
+setwd(currentWD)
+
+fileToLoad <- file.choose(new = TRUE) # Select the file from the file chooser
+origAddress <- read.csv(fileToLoad, stringsAsFactors = FALSE) # Read in the CSV data and store it in a variable 
+geocoded <- data.frame(stringsAsFactors = FALSE) # Initialize the data frame
+
+# Loop through addresses to get lat lon using ggmap package
+# Add to origAddress data frame in new columns lat and lon
+library(ggmap)
+for(i in 1:nrow(origAddress))
+{
+  result <- geocode(origAddress$address[i], output = "latlona", source = "google")
+  origAddress$lon[i] <- as.numeric(result[1])
+  origAddress$lat[i] <- as.numeric(result[2])
+}
+# Write a CSV file containing origAddress to the working directory
+write.csv(origAddress, "geocoded.csv")
+coord <- read.csv("User/xxx/geocoded.csv") # Read in the geocoded data 
+
+library(leaflet) # Create map using geocoded dataset using leaflet package
+m <- leaflet(coord) %>% 
+addTiles('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', 
+	attribution = 'Map tiles by <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>')
+m %>% setView(103.851959, 1.290270, zoom = 5)
+m %>% addCircles(~lon, ~lat, weight = 3, radius = 40, color = "#B30000", stroke = TRUE, fillOpacity = 0.8)
+
+library(htmlwidgets) # Create self-contained html file using htmlwidgets package
+saveWidget(m, "m.html")
+# Import .html file to media library 
+# Encode in page when editing blog post
+ <iframe seamless src = "http://www.xxx...m.html", width = "2500", height = "1000"></iframe>
