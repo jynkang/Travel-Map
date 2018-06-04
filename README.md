@@ -1,6 +1,6 @@
 # Travel-Map
-Mapping my travels one trip at a time
+Mapping my travels 
 
-Using R to create a travel map:
-Plot multiple points from a csv file
+Using R to create a travel map: \n
+Plot multiple points from a csv file \n
 Create interactive map that can be zoomed in and out
